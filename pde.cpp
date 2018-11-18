@@ -20,5 +20,5 @@ int main(int argc, char const *argv[])
 
 
 //Caso 1
-
+//Pequeño cambio para probar commit desde terminal 
 double Tfrontera = 10;
