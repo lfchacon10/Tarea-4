@@ -1,16 +1,27 @@
-#make file  makefile.mk
+#make file  Resultados_hw4.pdf
 
-p45.png proyectiles.png: datoProyectil.txt adicionalProyectil.txt
+
+Resultados.pdf : p45.png proyectiles.png calcitaFija0.png calcitaAbierta0.png calcitaPeriodica0.png Resultados_hw4.tex
+	pdflatex Resultados_hw4.tex
+
+p45.png proyectiles.png calcitaFija0.png calcitaAbierta0.png calcitaPeriodica0.png : datoProyectil.txt adicionalProyectil.txt fronterasFijas.txt fronterasAbiertas.txt fronterasPeriodicas.txt
 	python3 Plots_hw4.py
 
-datoProyectil.txt adicionalProyectil.txt: ./a.out
-	./a.out 
+datoProyectil.txt adicionalProyectil.txt: ./ode.x
+	./ode.x 
 
-./a.out: ode.cpp
-	 g++ ode.cpp
+./ode.x: ode.cpp
+	 g++ ode.cpp -o ode.x
 
-#datos2.dat: ./a.out
-#	./a.out >> datos2.dat
+fronterasFijas.txt:./pde.x
+	./pde.x 0 fronterasFijas.txt
 
-#./a.out: pde.cpp
-#	 g++ pde.cpp
+fronterasAbiertas.txt:./pde.x
+	./pde.x 1 fronterasAbiertas.txt
+
+fronterasPeriodicas.txt: ./pde.x
+	./pde.x 2  fronterasPeriodicas.txt
+
+./pde.x: ode.cpp
+	 g++ pde.cpp -o pde.x
+
